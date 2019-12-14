@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def save_points_to_file(filename, points):
-    with open('points/'+filename, "w") as f:
+    with open(filename, "w") as f:
         for point in points:
             f.write(f"{point[0]} {point[1]}\n")
 
@@ -54,12 +54,12 @@ def plot_points(points):
 if __name__ == "__main__":
     points = gen_shape(10, 10, 30, 20, ellipse, radian_high=np.pi/3)
     points = points + gen_shape(5, 5, 0, 20, ellipse, radian_low=2*np.pi/3, radian_high=1.2*np.pi)
-    points = points + gen_shape(1, 0, 5, 5, zigzag_line, radian_high=3*np.pi)
+    points = points + gen_shape(1, -0.1, 5, 5, zigzag_line, radian_high=3*np.pi)
     points = points + gen_shape(1.5, 0.5, 20, 8, zigzag_line, radian_high=3*np.pi)
     points = points + gen_shape(1.5, -0.2, 10, 30, line, radian_high=2*np.pi)
 
 
-    save_points_to_file("line.txt", points)
+    save_points_to_file("points/line.txt", points)
     plot_points(points)
 
 

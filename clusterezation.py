@@ -1,4 +1,4 @@
-from shape_generator import get_points_from_file
+from shape_generator import get_points_from_file, save_points_to_file
 import matplotlib.pyplot as plt
 
 colors = {0: "b", 1: "g", 2: "r", 3: "c", 4: "m", 5: "y", 6: "k"}
@@ -26,7 +26,6 @@ class Cluster:
             self.right = point
             return True
         else:
-            dist = min(self.dist(self.left, point), self.dist(self.right, point))
             return False
 
     def get_xy(self):
@@ -39,8 +38,6 @@ def clustered(points, max_dist):
     clusters = [Cluster(points[0])]
 
     for point in points[1:]:
-        # sout.flush()
-        # sout.write(f"\r{len(clusters)}, {points.index(point) / len(points)} %")
 
         clustered = False
         for cluster in clusters:
@@ -102,7 +99,7 @@ def plot_lines(lines):
         b = reg_coef(x, y)
         y_p = [b[0] + b[1]*x_i for x_i in x]
         plt.plot(x, y_p, color='g')
-    plt.savefig("output//lines.png")
+    plt.savefig("output/lines.png")
 
 
 def plot_clusters(clusters):
@@ -111,11 +108,13 @@ def plot_clusters(clusters):
     for cluster in clusters:
         plt.plot(*zip(*cluster.points), marker='o', markersize=3, color=colors[c % 7], ls='')
         c += 1
-    plt.savefig("output//clusters_plot.png")
+    plt.savefig("output/clusters_plot.png")
 
 
 if __name__ == "__main__":
     star_points = get_points_from_file("line.txt")
-    clusters = clustered(star_points, 5)
-    plot_clusters(clusters)
-    find_lines(clusters, 0.9)
+    line_clusters = clustered(star_points, 5)
+    plot_clusters(line_clusters)
+    clustered_lines = find_lines(line_clusters, 0.9)
+    for line in clustered_lines:
+        save_points_to_file(f"output/line{clustered_lines.index(line)}.txt", line)
