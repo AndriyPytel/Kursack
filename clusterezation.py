@@ -115,7 +115,7 @@ def plot_clusters(clusters):
 
 
 if __name__ == "__main__":
-    star_points = get_points_from_file("map2.txt")
+    star_points = get_points_from_file("line.txt")
     clusters = clustered(star_points, 5)
     plot_clusters(clusters)
     find_lines(clusters, 0.9)
